@@ -121,8 +121,8 @@ class Calendar {
  */
 const createCalendar = (beginYear, range) => {
   for (let y = 0; y <= range - 1; y++) {
-    y = beginYear + y;
-    for (let m = 1; m <= 12; m++) new Calendar(y, m).print();
+    year = beginYear + y;
+    for (let m = 1; m <= 12; m++) new Calendar(year, m).print();
   }
 };
 
