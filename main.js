@@ -90,18 +90,15 @@ class Calendar {
     let countLastWeekBlank =
       lastWeek === 0 ? 0 : lastWeek >= 0 ? this.week - lastWeek : -lastWeek;
     //初週のblank
-    for (let i = 1; i <= countBeginningBlank; i++) {
-      arr.push(blank);
-    }
+    for (let i = 1; i <= countBeginningBlank; i++) arr.push(blank);
     //月の日数
     for (let i = 1; i <= count; i++) {
       i = String(i);
       i.length === 1 ? arr.push('0' + i + ' ') : arr.push(i + ' ');
     }
     //最終週のblank
-    for (let i = 1; i <= countLastWeekBlank; i++) {
-      arr.push(blank);
-    }
+    for (let i = 1; i <= countLastWeekBlank; i++) arr.push(blank);
+
     //改行
     let calender = arr.map((v, i) =>
       (i + 1) % this.week === 0 ? v + '\n' : v
@@ -116,9 +113,33 @@ class Calendar {
 }
 
 //インスタンス生成
-let calender = new Calendar(1988, 1);
+let calender = new Calendar(2020, 12);
 console.log('②', calender.year);
 console.log('③', calender.countDay());
 console.log('④', calender.countWeek());
 console.log('⑤', calender.countBeginningBlank());
-calender.print();
+
+/**
+ * カレンダー生成
+ * @param {number} beginYear 開始年度
+ * @param {number} range 何年分
+ */
+const createCalendar = (beginYear, range) => {
+  year = [];
+  month = [];
+  instance = [];
+  for (let i = 0; i <= range - 1; i++) {
+    beginYear + i;
+    year.push(beginYear + i);
+  }
+  for (let i = 1; i <= 12; i++) month.push(i);
+
+  year.forEach((y) => {
+    month.forEach((m) => {
+      instance.push(new Calendar(y, m));
+    });
+  });
+  instance.forEach((i) => i.print());
+};
+
+createCalendar(2000, 100);
