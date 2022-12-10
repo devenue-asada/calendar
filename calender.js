@@ -120,18 +120,10 @@ class Calendar {
  * @param {number} range 何年分
  */
 const createCalendar = (beginYear, range) => {
-  let year = [];
-  let month = [];
-  for (let i = 0; i <= range - 1; i++) {
-    beginYear + i;
-    year.push(beginYear + i);
+  for (let y = 0; y <= range - 1; y++) {
+    y = beginYear + y;
+    for (let m = 1; m <= 12; m++) new Calendar(y, m).print();
   }
-  for (let i = 1; i <= 12; i++) month.push(i);
-  year.forEach((y) => {
-    month.forEach((m) => {
-      new Calendar(y, m).print();
-    });
-  });
 };
 
 createCalendar(2000, 100);
