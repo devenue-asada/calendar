@@ -27,7 +27,6 @@ class Calendar {
   get year() {
     return this._year;
   }
-
   /**
    * ③ 日数を返すメソッドを作成しましょう
    * Arguments: なし
@@ -98,26 +97,22 @@ class Calendar {
     }
     //最終週のblank
     for (let i = 1; i <= countLastWeekBlank; i++) arr.push(blank);
-
     //改行
     let calender = arr.map((v, i) =>
       (i + 1) % this.week === 0 ? v + '\n' : v
     );
 
     //描画
-    p(`${this._year}/${this._month}\n`);
+    p(
+      `${this._year}/${
+        this._month
+      }       ${this.countWeek()}週 ${this.countDay()}日 \n`
+    );
     p('S  M  T  W  T  F  S \n');
     calender.forEach((v) => p(v));
     p('\n');
   }
 }
-
-//インスタンス生成
-let calender = new Calendar(2020, 12);
-console.log('②', calender.year);
-console.log('③', calender.countDay());
-console.log('④', calender.countWeek());
-console.log('⑤', calender.countBeginningBlank());
 
 /**
  * カレンダー生成
