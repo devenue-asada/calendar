@@ -87,8 +87,9 @@ class Calendar {
     let countBeginningBlank = this.countBeginningBlank();
     //最終週のblank日数算出
     let lastWeek = this.remDays - this.firstWeekDays;
-    let countLastWeekBlank = lastWeek >= 0 ? this.week - lastWeek : -lastWeek;
-
+    let countLastWeekBlank =
+      lastWeek === 0 ? 0 : lastWeek >= 0 ? this.week - lastWeek : -lastWeek;
+    console.log(lastWeek);
     //初週のblank
     for (let i = 1; i <= countBeginningBlank; i++) {
       arr.push(blank);
@@ -116,7 +117,7 @@ class Calendar {
 }
 
 //インスタンス生成
-let calender = new Calendar(2022, 2);
+let calender = new Calendar(2022, 11);
 console.log('②', calender.year);
 console.log('③', calender.countDay());
 console.log('④', calender.countWeek());
