@@ -80,8 +80,8 @@ class Calendar {
    */
   print() {
     const p = (v) => process.stdout.write(v);
+    const blank = '-- ';
     let arr = [];
-    let blank = '-- ';
     let count = this.countDay();
     let countBeginningBlank = this.countBeginningBlank();
     //最終週のblank日数算出
@@ -101,13 +101,14 @@ class Calendar {
     let calender = arr.map((v, i) =>
       (i + 1) % this.week === 0 ? v + '\n' : v
     );
+    //タイトル
+    let isOneLenMonth = String(this._month).length === 1;
+    let title = `${this._year}/${this._month}${
+      isOneLenMonth ? '       ' : '      '
+    }${this.countWeek()}週 ${this.countDay()}日 \n`;
 
     //描画
-    p(
-      `${this._year}/${
-        this._month
-      }       ${this.countWeek()}週 ${this.countDay()}日 \n`
-    );
+    p(title);
     p('S  M  T  W  T  F  S \n');
     calender.forEach((v) => p(v));
     p('\n');
@@ -120,14 +121,13 @@ class Calendar {
  * @param {number} range 何年分
  */
 const createCalendar = (beginYear, range) => {
-  year = [];
-  month = [];
+  let year = [];
+  let month = [];
   for (let i = 0; i <= range - 1; i++) {
     beginYear + i;
     year.push(beginYear + i);
   }
   for (let i = 1; i <= 12; i++) month.push(i);
-
   year.forEach((y) => {
     month.forEach((m) => {
       new Calendar(y, m).print();
