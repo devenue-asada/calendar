@@ -102,11 +102,10 @@ class Calendar {
       (i + 1) % this.week === 0 ? v + '\n' : v
     );
     //タイトル
-    let isOneLenMonth = String(this._month).length === 1;
-    let title = `${this._year}/${this._month}${
-      isOneLenMonth ? '       ' : '      '
-    }${this.countWeek()}週 ${this.countDay()}日 \n`;
-
+    let space = String(this._month).length === 1 ? '       ' : '      ';
+    let title = `${this._year}/${
+      this._month
+    }${space}${this.countWeek()}週 ${this.countDay()}日\n`;
     //描画
     p(title);
     p('S  M  T  W  T  F  S \n');
