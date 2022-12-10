@@ -1,4 +1,8 @@
 class Calendar {
+  week = 7;
+  count;
+  remDays;
+  firstWeekDays;
   /**
    * ① 初期化処理を書いてみよう
    * Arguments: 年(int), 月(int)
@@ -7,6 +11,12 @@ class Calendar {
   constructor(_year, _month) {
     this._year = _year;
     this._month = _month;
+    //月の日数
+    this.count = this.countDay();
+    //余り日数
+    this.remDays = this.count % this.week;
+    //初週の日数
+    this.firstWeekDays = this.week - this.countBeginningBlank();
   }
 
   /**
@@ -23,7 +33,7 @@ class Calendar {
    * Arguments: なし
    * Return: 日数(int)
    */
-  getDaysInMonth() {
+  countDay() {
     let month = new Date(this._year, this._month, 0);
     let days = month.getDate();
     return days;
@@ -36,64 +46,79 @@ class Calendar {
    * Arguments: なし
    * Return: 週の数(int)
    */
-  // public func count_week () {
-  //   //                   01
-  //   // 02 03 04 05 06 07 08
-  //   // 09 10 11 12 13 14 15
-  //   // 16 17 18 19 20 21 22
-  //   // 23 24 25 26 27 28 29
-  //   // 30 31
-  //   // の時 → 6
-
-  //   // 01 02 03 04 05 06 07
-  //   // 08 09 10 11 12 13 14
-  //   // 15 16 17 18 19 20 21
-  //   // 22 23 24 25 26 27 28
-  //   // の時 → 4
-  // }
+  // ④-1 count_dayを利用しよう
+  countWeek() {
+    //最低の週数
+    let minCount = Math.floor(this.count / this.week);
+    //「月の日数 % 7」の余りがない場合は0、余りが最初の週の日数を超える場合は2、そうでない場合は1
+    let addCount =
+      this.remDays === 0 ? 0 : this.remDays > this.firstWeekDays ? 2 : 1;
+    return minCount + addCount;
+  }
 
   /**
    * ⑤ 月初めの空白数
    * Arguments
    * Return 年(int)
    */
-  // public func count_beginning_blank () {
-  //   //                   01
-  //   // の時 → 6
-
-  //   //       01 02 03 04 05
-  //   // の時 → 2
-
-  //   // 01 02 03 04 05 06 07
-  //   // の時 → 0
-  // }
+  countBeginningBlank() {
+    return new Date(`${this._year}-${this._month}-1 09:00:00`).getDay();
+  }
 
   /**
    * ⑥ 引数のDateが週末か（初めてのprivate関数）
    * Arguments 日付(Date型)
    * Return 週末か(bool)
    */
-  // private func is_weekend (date) {
-  // }
+  _isWeekend(date) {
+    return date.getDay() === 0 || date.getDay() === 6 ? true : false;
+  }
 
   /**
    * ⑦ カレンダーを出力しよう
    * Arguments: なし
    * Return: なし
    */
-  // public func print () {
-  //   //                   01
-  //   // 02 03 04 05 06 07 08
-  //   // 09 10 11 12 13 14 15
-  //   // 16 17 18 19 20 21 22
-  //   // 23 24 25 26 27 28 29
-  //   // 30 31
-  // }
+  print() {
+    const p = (v) => process.stdout.write(v);
+    let arr = [];
+    let blank = '-- ';
+    let count = this.countDay();
+    let countBeginningBlank = this.countBeginningBlank();
+    //最終週のblank日数算出
+    let lastWeek = this.remDays - this.firstWeekDays;
+    let countLastWeekBlank = lastWeek >= 0 ? this.week - lastWeek : -lastWeek;
+
+    //初週のblank
+    for (let i = 1; i <= countBeginningBlank; i++) {
+      arr.push(blank);
+    }
+    //月の日数
+    for (let i = 1; i <= count; i++) {
+      i = String(i);
+      i.length === 1 ? arr.push('0' + i + ' ') : arr.push(i + ' ');
+    }
+    //最終週のblank
+    for (let i = 1; i <= countLastWeekBlank; i++) {
+      arr.push(blank);
+    }
+    //改行
+    let calender = arr.map((v, i) =>
+      (i + 1) % this.week === 0 ? v + '\n' : v
+    );
+
+    //描画
+    p(`${this._year}/${this._month}\n`);
+    p('S  M  T  W  T  F  S \n');
+    calender.forEach((v) => p(v));
+    p('\n');
+  }
 }
 
 //インスタンス生成
 let calender = new Calendar(2022, 2);
-//②
-console.log('年', calender.year);
-//③
-console.log('月の日数', calender.getDaysInMonth());
+console.log('②', calender.year);
+console.log('③', calender.countDay());
+console.log('④', calender.countWeek());
+console.log('⑤', calender.countBeginningBlank());
+calender.print();
