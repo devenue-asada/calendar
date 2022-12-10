@@ -127,7 +127,6 @@ console.log('⑤', calender.countBeginningBlank());
 const createCalendar = (beginYear, range) => {
   year = [];
   month = [];
-  instance = [];
   for (let i = 0; i <= range - 1; i++) {
     beginYear + i;
     year.push(beginYear + i);
@@ -136,10 +135,9 @@ const createCalendar = (beginYear, range) => {
 
   year.forEach((y) => {
     month.forEach((m) => {
-      instance.push(new Calendar(y, m));
+      new Calendar(y, m).print();
     });
   });
-  instance.forEach((i) => i.print());
 };
 
 createCalendar(2000, 100);
