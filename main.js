@@ -84,10 +84,6 @@ class Calendar {
     let arr = [];
     let count = this.countDay();
     let countBeginningBlank = this.countBeginningBlank();
-    //最終週のblank日数算出
-    let lastWeek = this.remDays - this.firstWeekDays;
-    let countLastWeekBlank =
-      lastWeek === 0 ? 0 : lastWeek >= 0 ? this.week - lastWeek : -lastWeek;
     //初週のblank
     for (let i = 1; i <= countBeginningBlank; i++) arr.push(blank);
     //月の日数
@@ -96,6 +92,9 @@ class Calendar {
       i.length === 1 ? arr.push('0' + i + ' ') : arr.push(i + ' ');
     }
     //最終週のblank
+    let lastWeek = this.remDays - this.firstWeekDays;
+    let countLastWeekBlank =
+      lastWeek === 0 ? 0 : lastWeek >= 0 ? this.week - lastWeek : -lastWeek;
     for (let i = 1; i <= countLastWeekBlank; i++) arr.push(blank);
     //改行
     let calender = arr.map((v, i) =>
@@ -105,7 +104,7 @@ class Calendar {
     let space = String(this._month).length === 1 ? '       ' : '      ';
     let title = `${this._year}/${
       this._month
-    }${space}${this.countWeek()}週 ${this.countDay()}日\n`;
+    }${space}${this.countWeek()}週 ${count}日\n`;
     //描画
     p(title);
     p('S  M  T  W  T  F  S \n');
