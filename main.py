@@ -14,6 +14,8 @@ class Calendar:
         self.rem_days = self.count % self.week
         # 初週の日数
         self.first_week_days = self.week - self.count_beginning_blank()
+        # 最低の週数
+        self.min_count = math.floor(self.count / self.week)
 
     # ② 年を返すメソッドを作成しましょう
     # Arguments: なし
@@ -33,11 +35,9 @@ class Calendar:
     # Arguments: なし
     # Return: 週の数(int)
     def count_week(self) -> int:
-        # 最低の週数
-        min_count = math.floor(self.count / self.week)
         #「月の日数 % 7」の余りがない場合は0、余りが最初の週の日数を超える場合は2、そうでない場合は1
         add_count = 0 if self.rem_days == 0 else 2 if self.rem_days > self.first_week_days else 1
-        return min_count + add_count
+        return self.min_count + add_count
 
     # ⑤ 月初めの空白数
     # Arguments
@@ -52,7 +52,7 @@ class Calendar:
     # Arguments 日付(Date型)
     # Return 週末か(bool)
     def __is_weekend(self, date) -> bool:
-        return True if date.weekday() == 0 or date.weekday() == 6 else False
+        return date.weekday() == 0 or date.weekday() == 6
 
     # ⑦ カレンダーを出力しよう
     # Arguments: なし

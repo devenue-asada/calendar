@@ -3,6 +3,7 @@ class Calendar {
   count;
   remDays;
   firstWeekDays;
+  minCount;
   /**
    * ① 初期化処理を書いてみよう
    * Arguments: 年(int), 月(int)
@@ -17,6 +18,8 @@ class Calendar {
     this.remDays = this.count % this.week;
     //初週の日数
     this.firstWeekDays = this.week - this.countBeginningBlank();
+    //最低の週数
+    this.minCount = Math.floor(this.count / this.week);
   }
 
   /**
@@ -47,12 +50,10 @@ class Calendar {
    */
   // ④-1 count_dayを利用しよう
   countWeek() {
-    //最低の週数
-    let minCount = Math.floor(this.count / this.week);
     //「月の日数 % 7」の余りがない場合は0、余りが最初の週の日数を超える場合は2、そうでない場合は1
     let addCount =
       this.remDays === 0 ? 0 : this.remDays > this.firstWeekDays ? 2 : 1;
-    return minCount + addCount;
+    return this.minCount + addCount;
   }
 
   /**
@@ -70,7 +71,7 @@ class Calendar {
    * Return 週末か(bool)
    */
   _isWeekend(date) {
-    return date.getDay() === 0 || date.getDay() === 6 ? true : false;
+    return date.getDay() === 0 || date.getDay() === 6;
   }
 
   /**
@@ -125,4 +126,4 @@ const createCalendar = (beginYear, range) => {
   }
 };
 
-createCalendar(2000, 100);
+createCalendar(2000, 1);
